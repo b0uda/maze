@@ -15,17 +15,18 @@
 <script type="text/javascript">
 
     let cols , rows;
-    let width = 420 , height = 420;
+    let width = 405 , height = 405;
     let w = 40;
     let cells = [];
     var current;
     var debug = true;
+    var stack = [];
 
   function setup() {
         createCanvas(width, height);
         cols = floor(width/w);
         rows = floor(height/w);
-        frameRate(5);
+        frameRate(15);
         
         // init the map
 
@@ -58,13 +59,16 @@
         current.visited = true;
         current.hightLights();
        var next =  current.checkNeighbors();
+      
        if (next){
-
+           stack.push(current);
            
             removeWalls(current , next);
             current = next;
              next.visited = true; 
             
+       }else if (stack.length > 0){
+            current = stack.pop();
        }
         
     } //draw
