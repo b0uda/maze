@@ -7,6 +7,184 @@
     <title>Maze by b0uda</title>
 </head>
 <body>
-   
+    <h1>b0uda maze generator</h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.sound.min.js"></script>
+
+<script type="text/javascript">
+
+    let cols , rows;
+    let width = 420 , height = 420;
+    let w = 40;
+    let cells = [];
+    var current;
+    var debug = true;
+
+  function setup() {
+        createCanvas(width, height);
+        cols = floor(width/w);
+        rows = floor(height/w);
+        frameRate(5);
+        
+        // init the map
+
+          for (var x = 0; x < 10; x++) {
+
+            // console.log(`x = ${x} \n` );
+
+             for (var y = 0; y < 10; y++) {
+
+                // console.log(`x = ${x}  || and y = ${y}   \n`);
+                
+                var cell = new Cell(y , x);
+                console.log(cell);
+                cells.push(cell);
+
+          }
+      }
+
+      debug = false;
+      current = cells[45];
+      
+    } //setup
+
+    function draw() {
+        background(200);
+         
+        for (let i = 0; i < cells.length; i++) {     
+            cells[i].show();     
+        }
+        current.visited = true;
+        current.hightLights();
+       var next =  current.checkNeighbors();
+       if (next){
+
+            next.visited = true;
+            removeWalls(current , next);
+            current = next;
+       }
+        
+    } //draw
+
+    
+    // get index of array 
+    function index(i , j) {
+        if (i < 0 || j < 0 || i > cols-1 || j > rows-1){
+            return -1;
+        }
+        return i + j * cols;
+    }
+
+    function removeWalls(a , b) {
+     
+        var x = a.x - b.x;
+        if (x === 1){
+            a.walls[3] = false;
+            b.walls[1] = false;
+        }else{
+            a.walls[1] = false;
+            b.walls[3] = false;
+        }
+
+        var y = a.y - b.y;
+         if (y === 1) {
+            a.walls[0] = false;
+            b.walls[2] = false;
+        } else {
+            a.walls[2] = false;
+            b.walls[0] = false;
+        }
+        
+    }// remove walls
+
+    function Cell(x , y) {
+
+        this.x = x;
+        this.y = y;
+        // top right bottom left
+        this.walls = [true ,true , true , true];
+        
+        this.hightLights = function(){
+            var posX = this.x * w;
+            var posY = this.y * w;
+            
+            noStroke();
+            fill(0,0,255,100);
+            rect(posX , posY , w ,w );
+        }
+
+        this.visited = false;
+
+        // check if cell has neighbors
+        this.checkNeighbors = function(){
+
+            var neightbors = [];
+
+            var top = cells[index(x, y - 1)];
+            var right = cells[index(x +1, y)];
+            var bottom = cells[index(x, y + 1)];;
+            var left = cells[index(x-1, y )];;
+
+            if (top && !top.visited){
+                neightbors.push(top);
+            }
+            if (right && !right.visited) {
+                neightbors.push(right);
+            }
+            if (bottom && !bottom.visited) {
+                neightbors.push(bottom);
+            }
+            if (left && !left.visited) {
+                neightbors.push(left);
+            }
+
+            if (neightbors.length > 0){
+                var rand = floor(random(0 , neightbors.length));
+                return neightbors[rand];
+            }else{
+                return undefined;
+            }
+
+        } //this.checkNeighbors
+
+        this.show = function () {
+            
+            var posX = this.x * w;
+            var posY = this.y * w;
+            
+            stroke(0);
+            // top
+            if (this.walls[0]){
+                 line(posX, posY, posX + w, posY);
+            }
+            // right
+            if (this.walls[1]) {
+                line(posX + w, posY, posX + w, posY + w);
+
+            }
+            // bottom
+            if (this.walls[2]) {
+                line(posX + w, posY + w, posX, posY + w);
+
+            }
+            // left
+            if (this.walls[3]) {
+                line(posX, posY + w, posX, posY);
+
+            }
+
+            if (this.visited){
+                noStroke();
+                fill(255,0,255,100);
+                rect(posX , posY , w ,w);
+            }
+           
+        } // this.show
+        
+    } //cell class
+
+
+</script>
 </body>
 </html>

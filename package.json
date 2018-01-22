@@ -34,6 +34,7 @@
     "compass-mixins": "^0.12.10",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
+    "p5": "^0.6.0",
     "popper.js": "^1.12.9",
     "precss": "^2.0.0",
     "susy": "^2"

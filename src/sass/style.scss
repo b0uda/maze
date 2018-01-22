@@ -11,3 +11,26 @@
 @import "breakpoint";
 
 
+@import url('https://fonts.googleapis.com/css?family=Sedgwick+Ave');
+
+
+html{
+    height: 100%;
+}
+body {
+    height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding-top: 10px;
+}
+
+h1{
+    position: absolute;
+    top: 10px;;
+    font-size: 3em;
+    font-family: 'Sedgwick Ave',  cursive;
+    color: lightgreen;
+    font-weight: 800;
+
+}
