@@ -15,14 +15,17 @@
 
 
 html{
-    height: 100%;
+   
 }
 body {
-    height: 100%;
-   display: flex;
-   justify-content: center;
+   
+//    display: flex;
+//    justify-content: center;
 //    align-items: center;
-padding-top:130px;
+padding:130px 0 0 80px;
+background-image: url('./../img/zoro.jpg');
+background-repeat: no-repeat;
+background-position: 80% 80%;
 }
 
 h1{
@@ -32,5 +35,7 @@ h1{
     font-family: 'Sedgwick Ave',  cursive;
     color: lightgreen;
     font-weight: 800;
+    @include box-shadow(rgba(green, 1.5) 0 0 25px, rgba(green, 0.1) 0 0 3px 1px inset);
+
 
 }
