@@ -60,9 +60,11 @@
        var next =  current.checkNeighbors();
        if (next){
 
-            next.visited = true;
+           
             removeWalls(current , next);
             current = next;
+             next.visited = true; 
+            
        }
         
     } //draw
@@ -82,7 +84,7 @@
         if (x === 1){
             a.walls[3] = false;
             b.walls[1] = false;
-        }else{
+        }else if (x === -1){
             a.walls[1] = false;
             b.walls[3] = false;
         }
@@ -91,7 +93,7 @@
          if (y === 1) {
             a.walls[0] = false;
             b.walls[2] = false;
-        } else {
+        } else if (y === -1) {
             a.walls[2] = false;
             b.walls[0] = false;
         }
